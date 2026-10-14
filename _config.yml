@@ -1,0 +1,37 @@
+# ─────────────────────────────────────────────────────────────
+# Neon Knuckle 홈페이지 설정 (GitHub Pages / Jekyll)
+# 회사 공통 정보는 여기서만 고치면 모든 페이지에 반영됩니다.
+# ─────────────────────────────────────────────────────────────
+title: Neon Knuckle
+url: "https://hisun830.github.io"   # 사이트 주소 (끝에 / 없음)
+baseurl: ""                          # 유저 사이트(hisun830.github.io)는 빈 값, 프로젝트 사이트면 "/레포이름"
+
+description_en: "Neon Knuckle is an independent studio making bite-sized mobile puzzle games, free on Google Play."
+description_ko: "네온너클은 가볍게 즐기는 모바일 퍼즐 게임을 만드는 독립 스튜디오입니다. Google Play에서 무료로 만나보세요."
+
+contact_email: neonknuckle830@gmail.com
+play_developer_url: "https://play.google.com/store/apps/developer?id=Neon+Knuckle"
+social:
+  facebook: "https://www.facebook.com/neonknuckleco"
+  instagram: "https://www.instagram.com/neon.knuckle/"
+
+# 게임 목록: _games/ 폴더의 파일 하나 = 게임 하나
+collections:
+  games:
+    output: true
+    permalink: /games/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: games
+    values:
+      layout: game
+
+markdown: kramdown
+exclude:
+  - README.md
+  - tools
+  - _site
+  - Gemfile
+  - Gemfile.lock

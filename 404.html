@@ -1,0 +1,25 @@
+---
+layout: default
+permalink: /404.html
+title_en: "Page not found — Neon Knuckle"
+title_ko: "페이지를 찾을 수 없음 — 네온너클"
+noindex: true
+hide_nav: true
+hide_footer: true
+---
+<style>
+  .nf{min-height:80vh;display:grid;place-items:center;text-align:center;padding:60px var(--gutter)}
+  .nf img{width:min(320px,70vw);margin:0 auto 24px;filter:drop-shadow(0 20px 40px rgba(168,85,247,.35))}
+  .nf h1{font-size:clamp(32px,5vw,56px);margin-bottom:12px}
+  .nf p{color:var(--muted);font-size:17px}
+</style>
+<main class="nf">
+  <div>
+    <img src="{{ '/assets/img/emblem.png' | relative_url }}" alt="{{ site.title }}">
+    <h1><span class="en">That arrow flew off the board.</span><span class="ko">이 화살표는 보드 밖으로 날아갔네요.</span></h1>
+    <p><span class="en">The page you're looking for doesn't exist.</span><span class="ko">찾으시는 페이지가 없습니다.</span></p>
+    <div class="cta-row center">
+      <a class="btn btn-primary" href="{{ '/' | relative_url }}"><span class="en">Back to home</span><span class="ko">홈으로</span></a>
+    </div>
+  </div>
+</main>

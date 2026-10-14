@@ -1,121 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Privacy Policy — Neon Knuckle</title>
-<meta name="description" content="Privacy Policy for Neon Knuckle and its games, including Aeroshoot." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<style>
-  :root{
-    --bg:#131233;--bg2:#1a1846;--surface:#211e57;--line:rgba(255,255,255,.09);
-    --ink:#ECEAFF;--muted:#9a95d6;--cyan:#34e5d0;--pink:#ff5ba0;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    background:
-      radial-gradient(900px 500px at 90% -10%, rgba(52,229,208,.08), transparent 60%),
-      var(--bg);
-    color:var(--ink);font-family:"Inter",system-ui,sans-serif;line-height:1.7;
-    min-height:100vh;-webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:760px;margin:0 auto;padding:0 28px}
-  header{padding:30px 0}
-  .brand{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:18px;
-    display:inline-flex;align-items:center;gap:11px;color:var(--ink);text-decoration:none}
-  .glyph{width:24px;height:24px;border-radius:6px;
-    background:linear-gradient(135deg,var(--cyan),var(--pink));
-    display:inline-grid;place-items:center;color:#131233;font-weight:700;font-size:15px}
+---
+layout: default
+title_en: "Privacy Policy — Neon Knuckle"
+title_ko: "개인정보처리방침 — 네온너클"
+description_en: "Privacy Policy for Neon Knuckle and its games."
+description_ko: "네온너클과 네온너클 게임의 개인정보처리방침입니다."
+---
+{% assign games = site.games | sort: "order" %}
+<main class="doc">
+  <p class="eyebrow">Legal</p>
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: October 14, 2026</p>
+  <p class="ko" style="font-size:14px">※ 본 방침은 스토어 심사 및 글로벌 이용자를 위해 영문으로 제공됩니다. 한국어 번역본이 필요하시면 아래 연락처로 문의해 주세요.</p>
 
-  .doc{padding:24px 0 60px}
-  .eyebrow{font-family:"DM Mono",monospace;font-size:13px;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--cyan)}
-  .doc h1{font-family:"Space Grotesk",sans-serif;font-weight:700;
-    font-size:clamp(34px,6vw,48px);line-height:1.05;letter-spacing:-.02em;margin:12px 0 8px}
-  .updated{font-family:"DM Mono",monospace;font-size:13px;color:var(--muted);margin-bottom:8px}
-  .intro{color:var(--muted);margin:18px 0 6px}
+  <p>This Privacy Policy explains how {{ site.title }} ("we", "us") handles information when you use our games, including {% for g in games %}<strong>{{ g.title }}</strong>{% unless forloop.last %}{% if forloop.rindex == 2 %} and {% else %}, {% endif %}{% endunless %}{% endfor %} (the "Games"). By using the Games, you agree to the practices described here.</p>
 
-  h2{font-family:"Space Grotesk",sans-serif;font-size:19px;letter-spacing:.01em;
-    margin:34px 0 10px;padding-top:22px;border-top:1px solid var(--line)}
-  p{margin:10px 0;color:#d8d5f4;font-size:15.5px}
-  ul{margin:10px 0 10px 20px;color:#d8d5f4;font-size:15.5px}
-  li{margin:6px 0}
-  a{color:var(--cyan);text-decoration:none}
-  a:hover{text-decoration:underline}
-  strong{color:var(--ink)}
+  <h2>1. Information we collect</h2>
+  <p>Our Games do not require you to create an account or provide your name or email to play. We and our partners may automatically collect:</p>
+  <ul>
+    <li><strong>Device and identifier data</strong> — device model, operating system version, language, and an advertising identifier (such as Google Advertising ID or Apple IDFA).</li>
+    <li><strong>Usage data</strong> — in-game events, levels played, session length, and similar gameplay analytics.</li>
+    <li><strong>Diagnostic data</strong> — crash logs and performance information used to fix bugs.</li>
+  </ul>
+  <p>We do not knowingly collect your real name, phone number, or precise location.</p>
 
-  footer{border-top:1px solid var(--line);padding:26px 0 56px}
-  .foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
-    font-family:"DM Mono",monospace;font-size:13px;color:var(--muted)}
-  .foot a{color:var(--muted)}
-  .foot a:hover{color:var(--ink)}
-</style>
-</head>
-<body>
-  <div class="wrap">
-    <header>
-      <a class="brand" href="index.html"><span class="glyph">N</span> Neon Knuckle</a>
-    </header>
+  <h2>2. How we use information</h2>
+  <ul>
+    <li>To run, maintain, and improve the Games.</li>
+    <li>To display advertising, including through third-party ad networks.</li>
+    <li>To analyze how the Games are used and to fix problems.</li>
+  </ul>
 
-    <main class="doc">
-      <span class="eyebrow">Legal</span>
-      <h1>Privacy Policy</h1>
-      <p class="updated">Last updated: June 24, 2026</p>
-      <p class="intro">This Privacy Policy explains how Neon Knuckle ("we", "us") handles information when you use our games, including <strong>Aeroshoot</strong> (the "Games"). By using the Games, you agree to the practices described here.</p>
+  <h2>3. Advertising and third-party partners</h2>
+  <p>Our Games show ads served through mediation. These partners may collect and process device identifiers and usage data to deliver and measure ads. Their handling of data is governed by their own privacy policies:</p>
+  <ul>
+    <li>AppLovin (MAX mediation) — <a href="https://www.applovin.com/privacy/" target="_blank" rel="noopener">applovin.com/privacy</a></li>
+    <li>Google AdMob — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></li>
+    <li>Meta Audience Network — <a href="https://www.facebook.com/about/privacy" target="_blank" rel="noopener">facebook.com/about/privacy</a></li>
+    <li>Unity Ads — <a href="https://unity.com/legal/privacy-policy" target="_blank" rel="noopener">unity.com/legal/privacy-policy</a></li>
+  </ul>
 
-      <h2>1. Information we collect</h2>
-      <p>Our Games do not require you to create an account or provide your name or email to play. We and our partners may automatically collect:</p>
-      <ul>
-        <li><strong>Device and identifier data</strong> — device model, operating system version, language, and an advertising identifier (such as Google Advertising ID or Apple IDFA).</li>
-        <li><strong>Usage data</strong> — in-game events, levels played, session length, and similar gameplay analytics.</li>
-        <li><strong>Diagnostic data</strong> — crash logs and performance information used to fix bugs.</li>
-      </ul>
-      <p>We do not knowingly collect your real name, phone number, or precise location.</p>
+  <h2>4. Your choices</h2>
+  <ul>
+    <li><strong>Personalized ads</strong> — you can reset or limit your advertising identifier in your device settings (Android: Settings &gt; Privacy &gt; Ads; iOS: Settings &gt; Privacy &amp; Security &gt; Tracking).</li>
+    <li><strong>iOS tracking (ATT)</strong> — on iOS, you choose whether to allow tracking when the Game first asks.</li>
+    <li><strong>EEA/UK and California</strong> — where applicable, you may have rights to access, correct, or delete your data, and to opt out of certain processing. Contact us to make a request.</li>
+  </ul>
 
-      <h2>2. How we use information</h2>
-      <ul>
-        <li>To run, maintain, and improve the Games.</li>
-        <li>To display advertising, including through third-party ad networks.</li>
-        <li>To analyze how the Games are used and to fix problems.</li>
-      </ul>
+  <h2>5. Children's privacy</h2>
+  <p>Our Games are intended for a general audience and are not directed to children under 13 (or the minimum age required in your country). We do not knowingly collect personal information from children. If you believe a child has provided us information, contact us and we will take appropriate steps.</p>
 
-      <h2>3. Advertising and third-party partners</h2>
-      <p>Our Games show ads served through mediation. These partners may collect and process device identifiers and usage data to deliver and measure ads. Their handling of data is governed by their own privacy policies:</p>
-      <ul>
-        <li>AppLovin (MAX mediation) — <a href="https://www.applovin.com/privacy/" target="_blank" rel="noopener">applovin.com/privacy</a></li>
-        <li>Google AdMob — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></li>
-        <li>Meta Audience Network — <a href="https://www.facebook.com/about/privacy" target="_blank" rel="noopener">facebook.com/about/privacy</a></li>
-        <li>Unity Ads — <a href="https://unity.com/legal/privacy-policy" target="_blank" rel="noopener">unity.com/legal/privacy-policy</a></li>
-      </ul>
+  <h2>6. Data retention and transfers</h2>
+  <p>We retain data only as long as needed for the purposes above. Our partners may process data on servers located in other countries; their policies describe those transfers.</p>
 
-      <h2>4. Your choices</h2>
-      <ul>
-        <li><strong>Personalized ads</strong> — you can reset or limit your advertising identifier in your device settings (Android: Settings &gt; Privacy &gt; Ads; iOS: Settings &gt; Privacy &amp; Security &gt; Tracking).</li>
-        <li><strong>iOS tracking (ATT)</strong> — on iOS, you choose whether to allow tracking when the Game first asks.</li>
-        <li><strong>EEA/UK and California</strong> — where applicable, you may have rights to access, correct, or delete your data, and to opt out of certain processing. Contact us to make a request.</li>
-      </ul>
+  <h2>7. Changes to this policy</h2>
+  <p>We may update this Privacy Policy from time to time. Changes take effect when posted on this page, and we will update the "Last updated" date above.</p>
 
-      <h2>5. Children's privacy</h2>
-      <p>Our Games are intended for a general audience and are not directed to children under 13 (or the minimum age required in your country). We do not knowingly collect personal information from children. If you believe a child has provided us information, contact us and we will take appropriate steps.</p>
-
-      <h2>6. Data retention and transfers</h2>
-      <p>We retain data only as long as needed for the purposes above. Our partners may process data on servers located in other countries; their policies describe those transfers.</p>
-
-      <h2>7. Changes to this policy</h2>
-      <p>We may update this Privacy Policy from time to time. Changes take effect when posted on this page, and we will update the "Last updated" date above.</p>
-
-      <h2>8. Contact</h2>
-      <p>Questions about this policy or your data? Email us at <a href="mailto:neonknuckle830@gmail.com">neonknuckle830@gmail.com</a>.</p>
-    </main>
-  </div>
-
-  <footer>
-    <div class="wrap foot">
-      <span>© 2026 Neon Knuckle</span>
-      <a href="index.html">← Back to home</a>
-    </div>
-  </footer>
-</body>
-</html>
+  <h2>8. Contact</h2>
+  <p>Questions about this policy or your data? Email us at <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a>.</p>
+</main>

@@ -1,0 +1,16 @@
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }} — home">
+      <img src="{{ '/assets/img/emblem-sm.png' | relative_url }}" alt="{{ site.title }}" width="320" height="243">
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="{{ '/#games' | relative_url }}"><span class="en">Games</span><span class="ko">게임</span></a>
+      <a href="{{ '/#about' | relative_url }}"><span class="en">About</span><span class="ko">소개</span></a>
+      <a href="{{ '/#contact' | relative_url }}"><span class="en">Contact</span><span class="ko">문의</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language / 언어">
+      <button type="button" data-lang-btn="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang-btn="ko" aria-pressed="false">KO</button>
+    </div>
+  </div>
+</header>

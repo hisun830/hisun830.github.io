@@ -1,197 +1,136 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Neon Knuckle — Aeroshoot</title>
-<meta name="description" content="Neon Knuckle is an independent game studio. Aeroshoot is a casual puzzle game about pushing colored arrows down open paths to clear the maze." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<style>
-  :root{
-    --bg:#131233;
-    --bg2:#1a1846;
-    --surface:#211e57;
-    --line:rgba(255,255,255,.09);
-    --ink:#ECEAFF;
-    --muted:#9a95d6;
-    --cyan:#34e5d0;
-    --pink:#ff5ba0;
-    --yellow:#ffc93c;
-    --lime:#8bff5c;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    background:
-      radial-gradient(1100px 600px at 78% -8%, rgba(52,229,208,.10), transparent 60%),
-      radial-gradient(900px 600px at 8% 105%, rgba(255,91,160,.10), transparent 60%),
-      var(--bg);
-    color:var(--ink);
-    font-family:"Inter",system-ui,sans-serif;
-    line-height:1.6;
-    min-height:100vh;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:1040px;margin:0 auto;padding:0 28px}
-  .eyebrow{
-    font-family:"DM Mono",monospace;
-    font-size:13px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--cyan);
-    display:flex;align-items:center;gap:10px;
-  }
-  .eyebrow::before{content:"";width:26px;height:1px;background:var(--cyan);opacity:.7}
+---
+layout: default
+title_en: "Neon Knuckle — Mobile casual game studio"
+title_ko: "네온너클 — 모바일 캐주얼 게임 스튜디오"
+description_en: "Neon Knuckle is an independent studio making bite-sized mobile puzzle games. Play Aeroshoot and Necklace Jam, free on Google Play."
+description_ko: "네온너클은 가볍게 즐기는 모바일 퍼즐 게임을 만드는 독립 스튜디오입니다. Aeroshoot와 Necklace Jam을 Google Play에서 무료로 만나보세요."
+---
+{% assign games = site.games | sort: "order" %}
+{% assign live_games = games | where: "status", "live" %}
+<main>
 
-  /* header */
-  header{padding:30px 0}
-  .brand{
-    font-family:"Space Grotesk",sans-serif;font-weight:700;
-    font-size:18px;letter-spacing:.01em;
-    display:inline-flex;align-items:center;gap:11px;
-  }
-  .glyph{
-    width:24px;height:24px;border-radius:6px;
-    background:linear-gradient(135deg,var(--cyan),var(--pink));
-    display:inline-grid;place-items:center;
-    color:#131233;font-weight:700;font-size:15px;
-  }
-
-  /* hero */
-  .hero{
-    display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;
-    padding:54px 0 70px;
-  }
-  .hero h1{
-    font-family:"Space Grotesk",sans-serif;font-weight:700;
-    font-size:clamp(56px,11vw,108px);line-height:.92;letter-spacing:-.02em;
-    margin:18px 0 22px;
-  }
-  .hero h1 .a{
-    background:linear-gradient(100deg,var(--cyan) 0%,var(--lime) 38%,var(--yellow) 64%,var(--pink) 100%);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  .lead{font-size:19px;color:var(--ink);max-width:42ch}
-  .lead-kr{font-size:15.5px;color:var(--muted);margin-top:12px;max-width:40ch}
-  .status{
-    margin-top:30px;display:inline-flex;align-items:center;gap:10px;
-    font-family:"DM Mono",monospace;font-size:13px;color:var(--muted);
-    padding:9px 15px;border:1px solid var(--line);border-radius:999px;
-    background:rgba(255,255,255,.02);
-  }
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime)}
-
-  /* signature: arrow board */
-  .board{
-    aspect-ratio:1;width:100%;max-width:360px;justify-self:end;
-    background:linear-gradient(160deg,var(--surface),var(--bg2));
-    border:1px solid var(--line);border-radius:22px;
-    padding:18px;
-    display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);
-    gap:10px;
-    box-shadow:0 30px 70px -40px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.05);
-  }
-  .cell{
-    border-radius:11px;background:rgba(255,255,255,.025);
-    border:1px solid rgba(255,255,255,.05);
-    display:grid;place-items:center;position:relative;overflow:hidden;
-  }
-  .arrow{font-size:26px;line-height:1;font-weight:700;will-change:transform,opacity}
-  .arrow.c{color:var(--cyan)}.arrow.p{color:var(--pink)}
-  .arrow.y{color:var(--yellow)}.arrow.l{color:var(--lime)}
-  @keyframes shootR{0%,62%{transform:translateX(0);opacity:1}80%{transform:translateX(40px);opacity:0}81%,100%{transform:translateX(-40px);opacity:0}}
-  @keyframes shootL{0%,62%{transform:translateX(0);opacity:1}80%{transform:translateX(-40px);opacity:0}81%,100%{transform:translateX(40px);opacity:0}}
-  @keyframes shootU{0%,62%{transform:translateY(0);opacity:1}80%{transform:translateY(-40px);opacity:0}81%,100%{transform:translateY(40px);opacity:0}}
-  @keyframes shootD{0%,62%{transform:translateY(0);opacity:1}80%{transform:translateY(40px);opacity:0}81%,100%{transform:translateY(-40px);opacity:0}}
-  .s{animation-duration:4.2s;animation-iteration-count:infinite;animation-timing-function:cubic-bezier(.6,0,.2,1)}
-  .a1{animation-name:shootR;animation-delay:.0s}
-  .a2{animation-name:shootD;animation-delay:.5s}
-  .a3{animation-name:shootL;animation-delay:1.0s}
-  .a4{animation-name:shootU;animation-delay:1.5s}
-  .a5{animation-name:shootR;animation-delay:2.0s}
-  .a6{animation-name:shootD;animation-delay:.9s}
-
-  /* about */
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:8px 0 64px}
-  .card{
-    border:1px solid var(--line);border-radius:16px;padding:26px 26px 28px;
-    background:linear-gradient(180deg,rgba(255,255,255,.025),transparent);
-  }
-  .card h2{font-family:"Space Grotesk",sans-serif;font-size:15px;letter-spacing:.02em;margin-bottom:10px}
-  .card p{color:var(--muted);font-size:15px}
-  .card p + p{margin-top:10px}
-  .card a{color:var(--cyan);text-decoration:none}
-  .card a:hover{text-decoration:underline}
-
-  footer{border-top:1px solid var(--line);padding:30px 0 56px}
-  .foot{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
-    font-family:"DM Mono",monospace;font-size:13px;color:var(--muted)}
-  .foot a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent}
-  .foot a:hover{color:var(--ink);border-bottom-color:var(--ink)}
-
-  @media (max-width:760px){
-    .hero{grid-template-columns:1fr;gap:34px;padding:34px 0 50px}
-    .board{max-width:300px;justify-self:center;order:-1}
-    .grid2{grid-template-columns:1fr}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .s{animation:none}
-    html{scroll-behavior:auto}
-  }
-</style>
-</head>
-<body>
-  <div class="wrap">
-    <header>
-      <span class="brand"><span class="glyph">N</span> Neon Knuckle</span>
-    </header>
-
-    <section class="hero">
-      <div>
-        <span class="eyebrow">Independent game studio</span>
-        <h1>Aero<span class="a">shoot</span></h1>
-        <p class="lead">Tap an arrow, send it flying down an open path, and don't stop until the board is empty. A casual puzzle you can pick up in a second.</p>
-        <span class="status"><span class="dot"></span> Coming soon to mobile</span>
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <video class="hero-bg" autoplay muted loop playsinline preload="metadata" poster="{{ '/assets/video/intro-poster.jpg' | relative_url }}" aria-hidden="true" tabindex="-1">
+      <source src="{{ '/assets/video/intro.mp4' | relative_url }}" type="video/mp4">
+    </video>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="en">Mobile casual game studio</span><span class="ko">모바일 캐주얼 게임 스튜디오</span></p>
+        <h1 class="display">
+          <span class="en">Casual puzzles that <span class="grad">pack a punch.</span></span>
+          <span class="ko">가볍게 집어 들고,<br>확실하게 <span class="grad">꽂히는 퍼즐.</span></span>
+        </h1>
+        <p class="lead">
+          <span class="en">Neon Knuckle makes bite-sized mobile puzzle games you can pick up in a second and keep coming back to all week.</span>
+          <span class="ko">네온너클은 1초면 시작할 수 있지만 일주일 내내 다시 켜게 되는, 작고 단단한 모바일 퍼즐 게임을 만듭니다.</span>
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#games"><span class="en">See our games</span><span class="ko">게임 보러가기</span></a>
+          <a class="btn btn-ghost" href="#contact"><span class="en">Get in touch</span><span class="ko">문의하기</span></a>
+        </div>
+        <ul class="badges">
+          <li><span class="en">{{ live_games.size }} title{% if live_games.size != 1 %}s{% endif %} live on Google Play</span><span class="ko">Google Play 출시작 {{ live_games.size }}종</span></li>
+          <li><span class="en">Free to play</span><span class="ko">무료 플레이</span></li>
+          <li><span class="en">Available worldwide</span><span class="ko">전 세계 서비스</span></li>
+        </ul>
       </div>
 
-      <div class="board" aria-hidden="true">
-        <div class="cell"></div>
-        <div class="cell"><span class="arrow c s a1">→</span></div>
-        <div class="cell"></div>
-        <div class="cell"><span class="arrow y s a4">↑</span></div>
-        <div class="cell"><span class="arrow l s a6">↓</span></div>
-        <div class="cell"></div>
-        <div class="cell"><span class="arrow p s a3">←</span></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"><span class="arrow c s a2">↓</span></div>
-        <div class="cell"></div>
-        <div class="cell"><span class="arrow p s a5">→</span></div>
-        <div class="cell"><span class="arrow y s a1">→</span></div>
-        <div class="cell"></div>
-        <div class="cell"><span class="arrow l s a4">↑</span></div>
-        <div class="cell"></div>
+      <div class="hero-visual">
+        <img class="hero-emblem" src="{{ '/assets/img/emblem.png' | relative_url }}" alt="{{ site.title }} emblem" width="900" height="683" fetchpriority="high">
       </div>
-    </section>
-
-    <section class="grid2">
-      <div class="card">
-        <h2>About the studio</h2>
-        <p>Neon Knuckle is an independent game studio building small, sharp puzzle games for mobile.</p>
-      </div>
-      <div class="card">
-        <h2>Contact</h2>
-        <p>Press, partnerships, or support — get in touch.</p>
-        <p><a href="mailto:neonknuckle830@gmail.com">neonknuckle830@gmail.com</a></p>
-      </div>
-    </section>
-  </div>
-
-  <footer>
-    <div class="wrap foot">
-      <span>© 2026 Neon Knuckle</span>
-      <a href="privacy.html">Privacy Policy</a>
     </div>
-  </footer>
-</body>
-</html>
+  </section>
+
+  <!-- ===== GAMES (자동: _games 폴더의 파일 수만큼 카드 생성) ===== -->
+  <section class="section" id="games">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow"><span class="en">Our games</span><span class="ko">게임 라인업</span></p>
+        <h2><span class="en">Puzzles you can start with one tap.</span><span class="ko">탭 한 번으로 시작하는 퍼즐.</span></h2>
+        <p><span class="en">Free on Google Play, built for short sessions and long streaks.</span><span class="ko">Google Play에서 무료로 만나볼 수 있습니다. 짧게 즐기고 오래 이어지는 재미를 목표로 만들었습니다.</span></p>
+      </div>
+      <div class="games-grid">
+        {% for game in games %}{% assign g = game %}{% include game-card.html %}{% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHY ===== -->
+  <section class="section" id="why">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow"><span class="en">How we build</span><span class="ko">우리가 만드는 방식</span></p>
+        <h2><span class="en">Small games, built to be replayed.</span><span class="ko">작지만, 다시 켜게 되는 게임.</span></h2>
+      </div>
+      <div class="why-grid">
+        <div class="why reveal">
+          <div class="ico">{% assign icon_name = "zap" %}{% include icon.html %}</div>
+          <h3><span class="en">Instant</span><span class="ko">바로 시작</span></h3>
+          <p><span class="en">No tutorials, no maze of menus. One tap and you're already playing.</span><span class="ko">긴 튜토리얼도, 메뉴 미로도 없습니다. 탭 한 번이면 이미 플레이 중입니다.</span></p>
+        </div>
+        <div class="why reveal">
+          <div class="ico">{% assign icon_name = "repeat" %}{% include icon.html %}</div>
+          <h3><span class="en">Moreish loops</span><span class="ko">한 판 더</span></h3>
+          <p><span class="en">Levels fit in a coffee break, and the next one is always one tap away.</span><span class="ko">커피 한 잔 사이에 끝나는 레벨, 그리고 항상 한 탭 거리에 있는 다음 판.</span></p>
+        </div>
+        <div class="why reveal">
+          <div class="ico">{% assign icon_name = "heart" %}{% include icon.html %}</div>
+          <h3><span class="en">Kind to players</span><span class="ko">플레이어 우선</span></h3>
+          <p><span class="en">Free to play, fair difficulty, and support that actually answers.</span><span class="ko">무료 플레이, 공정한 난이도, 그리고 실제로 답장하는 고객 지원.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="section" id="about">
+    <div class="wrap about-grid">
+      <div class="reveal">
+        <p class="eyebrow"><span class="en">About</span><span class="ko">스튜디오 소개</span></p>
+        <h2><span class="en">An indie studio with neon in its name and puzzles at heart.</span><span class="ko">이름엔 네온, 마음엔 퍼즐을 담은 인디 스튜디오.</span></h2>
+        <p class="lead">
+          <span class="en">Neon Knuckle is a small independent team making casual mobile games. We design, build, test and publish everything ourselves — which keeps our games focused, quick to update, and close to the players who write to us.</span>
+          <span class="ko">네온너클은 캐주얼 모바일 게임을 만드는 작은 독립 팀입니다. 기획부터 개발, 테스트, 퍼블리싱까지 직접 하기에 게임은 군더더기 없고, 업데이트는 빠르며, 플레이어의 목소리와 가깝습니다.</span>
+        </p>
+        <p class="lead">
+          <span class="en">{% for g in live_games %}{{ g.title }}{% unless forloop.last %}{% if forloop.rindex == 2 %} and {% else %}, {% endif %}{% endunless %}{% endfor %} {% if live_games.size == 1 %}is{% else %}are{% endif %} live on Google Play — and we're already sketching what comes next.</span>
+          <span class="ko">{% for g in live_games %}{{ g.title }}{% unless forloop.last %}, {% endunless %}{% endfor %}이 Google Play에 출시되어 있으며, 다음 게임도 이미 그리고 있습니다.</span>
+        </p>
+      </div>
+      <aside class="facts reveal" aria-label="Studio facts">
+        <dl>
+          <dt>Studio</dt><dd>{{ site.title }}</dd>
+          <dt><span class="en">Focus</span><span class="ko">분야</span></dt><dd><span class="en">Casual mobile puzzles</span><span class="ko">캐주얼 모바일 퍼즐</span></dd>
+          <dt><span class="en">Platform</span><span class="ko">플랫폼</span></dt><dd>Android · Google Play</dd>
+          <dt><span class="en">Titles</span><span class="ko">출시작</span></dt><dd>{% for g in games %}{{ g.title }}{% unless forloop.last %}, {% endunless %}{% endfor %}</dd>
+          <dt><span class="en">Contact</span><span class="ko">연락처</span></dt><dd><a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></dd>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="contact reveal">
+        <p class="eyebrow"><span class="en">Contact</span><span class="ko">문의</span></p>
+        <h2><span class="en">Press, partnerships, publishing or support — say hello.</span><span class="ko">제휴·퍼블리싱·언론·고객 지원, 무엇이든 보내주세요.</span></h2>
+        <a class="email" href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a>
+        <p class="note">
+          <span class="en">For in-game issues, please include the game name and your device model so we can help faster.</span>
+          <span class="ko">게임 관련 문의는 게임 이름과 기기 모델을 함께 적어주시면 더 빨리 도와드릴 수 있습니다.</span>
+        </p>
+        <div class="cta-row center">
+          <a class="btn btn-primary" href="mailto:{{ site.contact_email }}"><span class="en">Email us</span><span class="ko">이메일 보내기</span></a>
+          <a class="btn btn-ghost" href="{{ site.play_developer_url }}" target="_blank" rel="noopener"><span class="en">Google Play developer page</span><span class="ko">Google Play 개발자 페이지</span></a>
+        </div>
+        <div class="contact-social">
+          <p class="follow"><span class="en">Follow us</span><span class="ko">소식 받기</span></p>
+          {% include social.html %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% assign t_en = page.title_en | default: page.title | default: site.title %}
+{% assign t_ko = page.title_ko | default: t_en %}
+{% assign d_en = page.description_en | default: site.description_en %}
+{% assign d_ko = page.description_ko | default: site.description_ko %}
+{% assign og_img = page.og_image | default: page.images.keyart | default: "/assets/img/og.jpg" %}
+<title data-en="{{ t_en | escape }}" data-ko="{{ t_ko | escape }}">{{ t_en | escape }}</title>
+<meta name="description" data-en="{{ d_en | escape }}" data-ko="{{ d_ko | escape }}" content="{{ d_en | escape }}">
+{% if page.noindex %}<meta name="robots" content="noindex">{% endif %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.title }}">
+<meta property="og:title" content="{{ page.og_title | default: t_en | escape }}">
+<meta property="og:description" content="{{ d_en | escape }}">
+<meta property="og:image" content="{{ og_img | absolute_url }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0716">
+<link rel="icon" href="{{ '/assets/img/favicon-32.png' | relative_url }}" sizes="32x32" type="image/png">
+<link rel="icon" href="{{ '/assets/img/favicon-64.png' | relative_url }}" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="{{ '/assets/img/apple-touch-icon.png' | relative_url }}">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+<script>
+(function(){try{
+  var ql=new URLSearchParams(location.search).get('lang');
+  var l=ql||localStorage.getItem('nk-lang')||(((navigator.language||'en').toLowerCase().indexOf('ko')===0)?'ko':'en');
+  document.documentElement.lang=(l==='ko')?'ko':'en';
+}catch(e){}})();
+</script>
+{% if page.accent %}<style>body{--accent:{{ page.accent }}}</style>{% endif %}
+</head>
+<body>
+{% unless page.hide_nav %}{% include nav.html %}{% endunless %}
+{{ content }}
+{% unless page.hide_footer %}{% include footer.html %}{% endunless %}
+<script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
+</body>
+</html>

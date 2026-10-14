@@ -1,0 +1,26 @@
+{% comment %} 메인 페이지 게임 카드. 사용 전에 변수 g 에 게임을 assign 해 둘 것 {% endcomment %}
+<article class="game-card reveal" style="--accent:{{ g.accent | default: '#a855f7' }}">
+  <a class="game-art" href="{{ g.url | relative_url }}" tabindex="-1" aria-hidden="true">
+    <img src="{{ g.images.keyart | relative_url }}" alt="" width="1024" height="500" loading="lazy">
+  </a>
+  <div class="game-body">
+    <div class="game-head">
+      <img class="game-icon" src="{{ g.images.icon | relative_url }}" alt="" width="76" height="76">
+      <div>
+        <h3>{{ g.title }}</h3>
+        <p class="tag">
+          <span class="en">{{ g.genre.en }} · {% if g.status == "soon" %}Coming soon{% else %}Free{% endif %}</span>
+          <span class="ko">{{ g.genre.ko }} · {% if g.status == "soon" %}출시 예정{% else %}무료{% endif %}</span>
+        </p>
+      </div>
+    </div>
+    <p class="pitch"><span class="en">{{ g.pitch.en }}</span><span class="ko">{{ g.pitch.ko }}</span></p>
+    <ul class="feat">
+      {% for h in g.highlights %}<li><span class="en">{{ h.en }}</span><span class="ko">{{ h.ko }}</span></li>{% endfor %}
+    </ul>
+    <div class="cta-row">
+      {% include store-button.html %}
+      <a class="btn btn-ghost" href="{{ g.url | relative_url }}"><span class="en">Game page</span><span class="ko">자세히 보기</span></a>
+    </div>
+  </div>
+</article>

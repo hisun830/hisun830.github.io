@@ -1,0 +1,139 @@
+---
+layout: default
+---
+{% assign games = site.games | sort: "order" %}
+<main>
+
+  <!-- ===== GAME HERO ===== -->
+  <section class="gh">
+    {% if page.hero_bg.video %}
+    <video class="hero-bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1">
+      <source src="{{ page.hero_bg.video | relative_url }}" type="video/mp4">
+    </video>
+    {% elsif page.hero_bg.image %}
+    <img class="hero-bg" src="{{ page.hero_bg.image | relative_url }}" alt="" aria-hidden="true">
+    {% elsif page.images.keyart %}
+    <img class="hero-bg" src="{{ page.images.keyart | relative_url }}" alt="" aria-hidden="true">
+    {% endif %}
+    <div class="wrap gh-grid">
+      <div class="gh-copy">
+        <a class="back" href="{{ '/#games' | relative_url }}">← <span class="en">All games</span><span class="ko">전체 게임</span></a>
+        {% if page.images.logo %}
+        <h1><img class="game-logo" src="{{ page.images.logo | relative_url }}" alt="{{ page.title }}" fetchpriority="high"{% if page.images.logo_width %} style="width:min({{ page.images.logo_width }}px,80%)"{% endif %}></h1>
+        {% else %}
+        <h1 class="display" style="margin-top:0">{{ page.title }}</h1>
+        {% endif %}
+        <p class="eyebrow" style="--c:var(--accent)">
+          <span class="en">{{ page.genre.en }} · {% if page.status == "soon" %}Coming soon{% else %}Free on Google Play{% endif %}</span>
+          <span class="ko">{{ page.genre.ko }} · {% if page.status == "soon" %}출시 예정{% else %}Google Play 무료{% endif %}</span>
+        </p>
+        <p class="tagline-big"><span class="en">{{ page.tagline.en }}</span><span class="ko">{{ page.tagline.ko }}</span></p>
+        <p class="lead"><span class="en">{{ page.lead.en }}</span><span class="ko">{{ page.lead.ko }}</span></p>
+        <div class="cta-row">
+          {% assign g = page %}{% include store-button.html %}
+          {% if page.images.screenshots.size > 0 %}<a class="btn btn-ghost" href="#shots"><span class="en">Screenshots</span><span class="ko">스크린샷</span></a>{% endif %}
+        </div>
+        {% if page.badges %}
+        <ul class="badges">
+          {% for b in page.badges %}<li><span class="en">{{ b.en }}</span><span class="ko">{{ b.ko }}</span></li>{% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="gh-visual">
+        <div class="phone">
+          {% if page.video.src %}
+          <video autoplay muted loop playsinline preload="metadata" poster="{{ page.video.poster | relative_url }}" aria-label="{{ page.title }} gameplay">
+            <source src="{{ page.video.src | relative_url }}" type="video/mp4">
+          </video>
+          {% elsif page.images.screenshots.size > 0 %}
+          <img src="{{ page.images.screenshots[0].src | relative_url }}" alt="{{ page.images.screenshots[0].alt }}">
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% if page.how_to_play %}
+  <!-- ===== HOW TO PLAY ===== -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow" style="--c:var(--accent)"><span class="en">How to play</span><span class="ko">플레이 방법</span></p>
+        <h2><span class="en">{{ page.how_to_play_title.en }}</span><span class="ko">{{ page.how_to_play_title.ko }}</span></h2>
+      </div>
+      <div class="steps">
+        {% for s in page.how_to_play %}
+        <div class="step reveal">
+          <h3><span class="en">{{ s.title.en }}</span><span class="ko">{{ s.title.ko }}</span></h3>
+          <p><span class="en">{{ s.text.en }}</span><span class="ko">{{ s.text.ko }}</span></p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if page.features %}
+  <!-- ===== FEATURES ===== -->
+  <section class="section" id="features" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow" style="--c:var(--accent)"><span class="en">Features</span><span class="ko">특징</span></p>
+        <h2><span class="en">{{ page.features_title.en }}</span><span class="ko">{{ page.features_title.ko }}</span></h2>
+      </div>
+      <div class="features">
+        {% for f in page.features %}
+        <div class="feature reveal">
+          <div class="ico">{% assign icon_name = f.icon %}{% include icon.html %}</div>
+          <div>
+            <h3><span class="en">{{ f.title.en }}</span><span class="ko">{{ f.title.ko }}</span></h3>
+            <p><span class="en">{{ f.text.en }}</span><span class="ko">{{ f.text.ko }}</span></p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if page.images.screenshots.size > 0 %}
+  <!-- ===== SCREENSHOTS ===== -->
+  <section class="section" id="shots" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow" style="--c:var(--accent)"><span class="en">Screenshots</span><span class="ko">스크린샷</span></p>
+        <h2><span class="en">{{ page.screenshots_title.en }}</span><span class="ko">{{ page.screenshots_title.ko }}</span></h2>
+      </div>
+      <div class="gallery reveal" aria-label="{{ page.title }} screenshots">
+        {% for s in page.images.screenshots %}
+        <button type="button"><img src="{{ s.src | relative_url }}" alt="{{ s.alt | escape }}" width="600" height="1066" loading="lazy"></button>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ===== CTA + OTHER GAMES ===== -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="contact reveal">
+        <p class="eyebrow" style="--c:var(--accent)"><span class="en">Play now</span><span class="ko">지금 플레이</span></p>
+        <h2><span class="en">{{ page.cta.en }}</span><span class="ko">{{ page.cta.ko }}</span></h2>
+        <div class="cta-row center">{% assign g = page %}{% include store-button.html %}</div>
+      </div>
+      {% for o in games %}{% if o.url != page.url %}
+      <div style="height:20px"></div>
+      <a class="cross reveal" href="{{ o.url | relative_url }}">
+        <img src="{{ o.images.icon | relative_url }}" alt="" width="64" height="64">
+        <div>
+          <p class="k"><span class="en">More from {{ site.title }}</span><span class="ko">{{ site.title }}의 다른 게임</span></p>
+          <h3>{{ o.title }}</h3>
+          <p><span class="en">{{ o.tagline.en }}</span><span class="ko">{{ o.tagline.ko }}</span></p>
+        </div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      {% endif %}{% endfor %}
+    </div>
+  </section>
+
+</main>

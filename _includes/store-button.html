@@ -1,0 +1,9 @@
+{% comment %} 사용 전에 변수 g 에 게임을 assign 해 둘 것. status가 soon이거나 store_url이 없으면 '출시 예정' 표시 {% endcomment %}
+{% if g.status == "soon" or g.store_url == nil or g.store_url == "" %}
+<span class="btn btn-soon"><span class="en">Coming soon</span><span class="ko">출시 예정</span></span>
+{% else %}
+<a class="btn btn-store" href="{{ g.store_url }}" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3.5v17a1 1 0 0 0 1.52.85l13-8.5a1 1 0 0 0 0-1.7l-13-8.5A1 1 0 0 0 6 3.5Z"/></svg>
+  <span><small><span class="en">Get it on</span><span class="ko">다운로드</span></small><b>Google Play</b></span>
+</a>
+{% endif %}
